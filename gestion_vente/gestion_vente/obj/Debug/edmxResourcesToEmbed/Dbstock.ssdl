@@ -1,0 +1,145 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="GESTION_de_STOCKModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="categorie">
+    <Key>
+      <PropertyRef Name="id_categorie" />
+    </Key>
+    <Property Name="id_categorie" Type="int" Nullable="false" />
+    <Property Name="nom_categorie" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="client">
+    <Key>
+      <PropertyRef Name="id_client" />
+    </Key>
+    <Property Name="id_client" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nom_client" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="prenom" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="adresse" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="tel" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="ville" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'GESTION_de_STOCK.dbo.detail_vente' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="detail_vente">
+    <Key>
+      <PropertyRef Name="id_vente" />
+      <PropertyRef Name="id_produit" />
+      <PropertyRef Name="quantite" />
+    </Key>
+    <Property Name="id_vente" Type="int" Nullable="false" />
+    <Property Name="id_produit" Type="int" Nullable="false" />
+    <Property Name="quantite" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="produit">
+    <Key>
+      <PropertyRef Name="id_produit" />
+    </Key>
+    <Property Name="id_produit" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nom_produit" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="ppv" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="pph" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="stock" Type="int" Nullable="false" />
+    <Property Name="id_categorie" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="utilisateur">
+    <Key>
+      <PropertyRef Name="nom_user" />
+    </Key>
+    <Property Name="nom_user" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="mot_de_pass" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="vente">
+    <Key>
+      <PropertyRef Name="id_vente" />
+    </Key>
+    <Property Name="id_vente" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="date_vente" Type="datetime" Nullable="false" />
+    <Property Name="id_client" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_detail_vente_produit1">
+    <End Role="produit" Type="Self.produit" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="detail_vente" Type="Self.detail_vente" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="produit">
+        <PropertyRef Name="id_produit" />
+      </Principal>
+      <Dependent Role="detail_vente">
+        <PropertyRef Name="id_produit" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_detail_vente_vente1">
+    <End Role="vente" Type="Self.vente" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="detail_vente" Type="Self.detail_vente" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="vente">
+        <PropertyRef Name="id_vente" />
+      </Principal>
+      <Dependent Role="detail_vente">
+        <PropertyRef Name="id_vente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_produit_categorie1">
+    <End Role="categorie" Type="Self.categorie" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="produit" Type="Self.produit" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="categorie">
+        <PropertyRef Name="id_categorie" />
+      </Principal>
+      <Dependent Role="produit">
+        <PropertyRef Name="id_categorie" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_vente_client2">
+    <End Role="client" Type="Self.client" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="vente" Type="Self.vente" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="client">
+        <PropertyRef Name="id_client" />
+      </Principal>
+      <Dependent Role="vente">
+        <PropertyRef Name="id_client" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="GESTION_de_STOCKModelStoreContainer">
+    <EntitySet Name="categorie" EntityType="Self.categorie" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="client" EntityType="Self.client" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="produit" EntityType="Self.produit" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="utilisateur" EntityType="Self.utilisateur" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="vente" EntityType="Self.vente" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="detail_vente" EntityType="Self.detail_vente" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [detail_vente].[id_vente] AS [id_vente], 
+    [detail_vente].[id_produit] AS [id_produit], 
+    [detail_vente].[quantite] AS [quantite]
+    FROM [dbo].[detail_vente] AS [detail_vente]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_detail_vente_produit1" Association="Self.FK_detail_vente_produit1">
+      <End Role="produit" EntitySet="produit" />
+      <End Role="detail_vente" EntitySet="detail_vente" />
+    </AssociationSet>
+    <AssociationSet Name="FK_detail_vente_vente1" Association="Self.FK_detail_vente_vente1">
+      <End Role="vente" EntitySet="vente" />
+      <End Role="detail_vente" EntitySet="detail_vente" />
+    </AssociationSet>
+    <AssociationSet Name="FK_produit_categorie1" Association="Self.FK_produit_categorie1">
+      <End Role="categorie" EntitySet="categorie" />
+      <End Role="produit" EntitySet="produit" />
+    </AssociationSet>
+    <AssociationSet Name="FK_vente_client2" Association="Self.FK_vente_client2">
+      <End Role="client" EntitySet="client" />
+      <End Role="vente" EntitySet="vente" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

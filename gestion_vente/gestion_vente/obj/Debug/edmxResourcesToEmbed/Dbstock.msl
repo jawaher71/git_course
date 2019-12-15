@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="GESTION_de_STOCKModelStoreContainer" CdmEntityContainer="DbstockContext">
+    <EntitySetMapping Name="categories">
+      <EntityTypeMapping TypeName="GESTION_de_STOCKModel.categorie">
+        <MappingFragment StoreEntitySet="categorie">
+          <ScalarProperty Name="id_categorie" ColumnName="id_categorie" />
+          <ScalarProperty Name="nom_categorie" ColumnName="nom_categorie" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="clients">
+      <EntityTypeMapping TypeName="GESTION_de_STOCKModel.client">
+        <MappingFragment StoreEntitySet="client">
+          <ScalarProperty Name="id_client" ColumnName="id_client" />
+          <ScalarProperty Name="nom_client" ColumnName="nom_client" />
+          <ScalarProperty Name="prenom" ColumnName="prenom" />
+          <ScalarProperty Name="adresse" ColumnName="adresse" />
+          <ScalarProperty Name="tel" ColumnName="tel" />
+          <ScalarProperty Name="ville" ColumnName="ville" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="produits">
+      <EntityTypeMapping TypeName="GESTION_de_STOCKModel.produit">
+        <MappingFragment StoreEntitySet="produit">
+          <ScalarProperty Name="id_produit" ColumnName="id_produit" />
+          <ScalarProperty Name="nom_produit" ColumnName="nom_produit" />
+          <ScalarProperty Name="ppv" ColumnName="ppv" />
+          <ScalarProperty Name="pph" ColumnName="pph" />
+          <ScalarProperty Name="stock" ColumnName="stock" />
+          <ScalarProperty Name="id_categorie" ColumnName="id_categorie" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="utilisateurs">
+      <EntityTypeMapping TypeName="GESTION_de_STOCKModel.utilisateur">
+        <MappingFragment StoreEntitySet="utilisateur">
+          <ScalarProperty Name="nom_user" ColumnName="nom_user" />
+          <ScalarProperty Name="mot_de_pass" ColumnName="mot_de_pass" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ventes">
+      <EntityTypeMapping TypeName="GESTION_de_STOCKModel.vente">
+        <MappingFragment StoreEntitySet="vente">
+          <ScalarProperty Name="id_vente" ColumnName="id_vente" />
+          <ScalarProperty Name="date_vente" ColumnName="date_vente" />
+          <ScalarProperty Name="id_client" ColumnName="id_client" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="detail_vente">
+      <EntityTypeMapping TypeName="GESTION_de_STOCKModel.detail_vente">
+        <MappingFragment StoreEntitySet="detail_vente">
+          <ScalarProperty Name="id_vente" ColumnName="id_vente" />
+          <ScalarProperty Name="id_produit" ColumnName="id_produit" />
+          <ScalarProperty Name="quantite" ColumnName="quantite" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

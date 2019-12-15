@@ -1,0 +1,384 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="GESTION_de_STOCKModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="categorie">
+          <Key>
+            <PropertyRef Name="id_categorie" />
+          </Key>
+          <Property Name="id_categorie" Type="int" Nullable="false" />
+          <Property Name="nom_categorie" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="client">
+          <Key>
+            <PropertyRef Name="id_client" />
+          </Key>
+          <Property Name="id_client" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nom_client" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="prenom" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="adresse" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="tel" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ville" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'GESTION_de_STOCK.dbo.detail_vente' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="detail_vente">
+          <Key>
+            <PropertyRef Name="id_vente" />
+            <PropertyRef Name="id_produit" />
+            <PropertyRef Name="quantite" />
+          </Key>
+          <Property Name="id_vente" Type="int" Nullable="false" />
+          <Property Name="id_produit" Type="int" Nullable="false" />
+          <Property Name="quantite" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="produit">
+          <Key>
+            <PropertyRef Name="id_produit" />
+          </Key>
+          <Property Name="id_produit" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nom_produit" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ppv" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="pph" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="stock" Type="int" Nullable="false" />
+          <Property Name="id_categorie" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="utilisateur">
+          <Key>
+            <PropertyRef Name="nom_user" />
+          </Key>
+          <Property Name="nom_user" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="mot_de_pass" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="vente">
+          <Key>
+            <PropertyRef Name="id_vente" />
+          </Key>
+          <Property Name="id_vente" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="date_vente" Type="datetime" Nullable="false" />
+          <Property Name="id_client" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_detail_vente_produit1">
+          <End Role="produit" Type="Self.produit" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="detail_vente" Type="Self.detail_vente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="produit">
+              <PropertyRef Name="id_produit" />
+            </Principal>
+            <Dependent Role="detail_vente">
+              <PropertyRef Name="id_produit" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_detail_vente_vente1">
+          <End Role="vente" Type="Self.vente" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="detail_vente" Type="Self.detail_vente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="vente">
+              <PropertyRef Name="id_vente" />
+            </Principal>
+            <Dependent Role="detail_vente">
+              <PropertyRef Name="id_vente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_produit_categorie1">
+          <End Role="categorie" Type="Self.categorie" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="produit" Type="Self.produit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="categorie">
+              <PropertyRef Name="id_categorie" />
+            </Principal>
+            <Dependent Role="produit">
+              <PropertyRef Name="id_categorie" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_vente_client2">
+          <End Role="client" Type="Self.client" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="vente" Type="Self.vente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="client">
+              <PropertyRef Name="id_client" />
+            </Principal>
+            <Dependent Role="vente">
+              <PropertyRef Name="id_client" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="GESTION_de_STOCKModelStoreContainer">
+          <EntitySet Name="categorie" EntityType="Self.categorie" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="client" EntityType="Self.client" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="produit" EntityType="Self.produit" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="utilisateur" EntityType="Self.utilisateur" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vente" EntityType="Self.vente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="detail_vente" EntityType="Self.detail_vente" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [detail_vente].[id_vente] AS [id_vente], 
+    [detail_vente].[id_produit] AS [id_produit], 
+    [detail_vente].[quantite] AS [quantite]
+    FROM [dbo].[detail_vente] AS [detail_vente]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_detail_vente_produit1" Association="Self.FK_detail_vente_produit1">
+            <End Role="produit" EntitySet="produit" />
+            <End Role="detail_vente" EntitySet="detail_vente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_detail_vente_vente1" Association="Self.FK_detail_vente_vente1">
+            <End Role="vente" EntitySet="vente" />
+            <End Role="detail_vente" EntitySet="detail_vente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_produit_categorie1" Association="Self.FK_produit_categorie1">
+            <End Role="categorie" EntitySet="categorie" />
+            <End Role="produit" EntitySet="produit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_vente_client2" Association="Self.FK_vente_client2">
+            <End Role="client" EntitySet="client" />
+            <End Role="vente" EntitySet="vente" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="GESTION_de_STOCKModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="categorie">
+          <Key>
+            <PropertyRef Name="id_categorie" />
+          </Key>
+          <Property Name="id_categorie" Type="Int32" Nullable="false" />
+          <Property Name="nom_categorie" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="produits" Relationship="Self.FK_produit_categorie1" FromRole="categorie" ToRole="produit" />
+        </EntityType>
+        <EntityType Name="client">
+          <Key>
+            <PropertyRef Name="id_client" />
+          </Key>
+          <Property Name="id_client" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nom_client" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="prenom" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="adresse" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="tel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ville" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="ventes" Relationship="Self.FK_vente_client2" FromRole="client" ToRole="vente" />
+        </EntityType>
+        <EntityType Name="produit">
+          <Key>
+            <PropertyRef Name="id_produit" />
+          </Key>
+          <Property Name="id_produit" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nom_produit" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ppv" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="pph" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="stock" Type="Int32" Nullable="false" />
+          <Property Name="id_categorie" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="categorie" Relationship="Self.FK_produit_categorie1" FromRole="produit" ToRole="categorie" />
+          <NavigationProperty Name="detail_vente" Relationship="Self.FK_detail_vente_produit1" FromRole="produit" ToRole="detail_vente" />
+        </EntityType>
+        <EntityType Name="utilisateur">
+          <Key>
+            <PropertyRef Name="nom_user" />
+          </Key>
+          <Property Name="nom_user" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="mot_de_pass" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="vente">
+          <Key>
+            <PropertyRef Name="id_vente" />
+          </Key>
+          <Property Name="id_vente" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="date_vente" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="id_client" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="client" Relationship="Self.FK_vente_client2" FromRole="vente" ToRole="client" />
+          <NavigationProperty Name="detail_vente" Relationship="Self.FK_detail_vente_vente1" FromRole="vente" ToRole="detail_vente" />
+        </EntityType>
+        <EntityType Name="detail_vente">
+          <Key>
+            <PropertyRef Name="id_vente" />
+            <PropertyRef Name="id_produit" />
+            <PropertyRef Name="quantite" />
+          </Key>
+          <Property Name="id_vente" Type="Int32" Nullable="false" />
+          <Property Name="id_produit" Type="Int32" Nullable="false" />
+          <Property Name="quantite" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="produit" Relationship="Self.FK_detail_vente_produit1" FromRole="detail_vente" ToRole="produit" />
+          <NavigationProperty Name="vente" Relationship="Self.FK_detail_vente_vente1" FromRole="detail_vente" ToRole="vente" />
+        </EntityType>
+        <Association Name="FK_produit_categorie1">
+          <End Role="categorie" Type="Self.categorie" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="produit" Type="Self.produit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="categorie">
+              <PropertyRef Name="id_categorie" />
+            </Principal>
+            <Dependent Role="produit">
+              <PropertyRef Name="id_categorie" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_vente_client2">
+          <End Role="client" Type="Self.client" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="vente" Type="Self.vente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="client">
+              <PropertyRef Name="id_client" />
+            </Principal>
+            <Dependent Role="vente">
+              <PropertyRef Name="id_client" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_detail_vente_produit1">
+          <End Role="produit" Type="Self.produit" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="detail_vente" Type="Self.detail_vente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="produit">
+              <PropertyRef Name="id_produit" />
+            </Principal>
+            <Dependent Role="detail_vente">
+              <PropertyRef Name="id_produit" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_detail_vente_vente1">
+          <End Role="vente" Type="Self.vente" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="detail_vente" Type="Self.detail_vente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="vente">
+              <PropertyRef Name="id_vente" />
+            </Principal>
+            <Dependent Role="detail_vente">
+              <PropertyRef Name="id_vente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DbstockContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="categories" EntityType="Self.categorie" />
+          <EntitySet Name="clients" EntityType="Self.client" />
+          <EntitySet Name="produits" EntityType="Self.produit" />
+          <EntitySet Name="utilisateurs" EntityType="Self.utilisateur" />
+          <EntitySet Name="ventes" EntityType="Self.vente" />
+          <EntitySet Name="detail_vente" EntityType="Self.detail_vente" />
+          <AssociationSet Name="FK_produit_categorie1" Association="Self.FK_produit_categorie1">
+            <End Role="categorie" EntitySet="categories" />
+            <End Role="produit" EntitySet="produits" />
+          </AssociationSet>
+          <AssociationSet Name="FK_vente_client2" Association="Self.FK_vente_client2">
+            <End Role="client" EntitySet="clients" />
+            <End Role="vente" EntitySet="ventes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_detail_vente_produit1" Association="Self.FK_detail_vente_produit1">
+            <End Role="produit" EntitySet="produits" />
+            <End Role="detail_vente" EntitySet="detail_vente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_detail_vente_vente1" Association="Self.FK_detail_vente_vente1">
+            <End Role="vente" EntitySet="ventes" />
+            <End Role="detail_vente" EntitySet="detail_vente" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="GESTION_de_STOCKModelStoreContainer" CdmEntityContainer="DbstockContext">
+          <EntitySetMapping Name="categories">
+            <EntityTypeMapping TypeName="GESTION_de_STOCKModel.categorie">
+              <MappingFragment StoreEntitySet="categorie">
+                <ScalarProperty Name="id_categorie" ColumnName="id_categorie" />
+                <ScalarProperty Name="nom_categorie" ColumnName="nom_categorie" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="clients">
+            <EntityTypeMapping TypeName="GESTION_de_STOCKModel.client">
+              <MappingFragment StoreEntitySet="client">
+                <ScalarProperty Name="id_client" ColumnName="id_client" />
+                <ScalarProperty Name="nom_client" ColumnName="nom_client" />
+                <ScalarProperty Name="prenom" ColumnName="prenom" />
+                <ScalarProperty Name="adresse" ColumnName="adresse" />
+                <ScalarProperty Name="tel" ColumnName="tel" />
+                <ScalarProperty Name="ville" ColumnName="ville" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="produits">
+            <EntityTypeMapping TypeName="GESTION_de_STOCKModel.produit">
+              <MappingFragment StoreEntitySet="produit">
+                <ScalarProperty Name="id_produit" ColumnName="id_produit" />
+                <ScalarProperty Name="nom_produit" ColumnName="nom_produit" />
+                <ScalarProperty Name="ppv" ColumnName="ppv" />
+                <ScalarProperty Name="pph" ColumnName="pph" />
+                <ScalarProperty Name="stock" ColumnName="stock" />
+                <ScalarProperty Name="id_categorie" ColumnName="id_categorie" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="utilisateurs">
+            <EntityTypeMapping TypeName="GESTION_de_STOCKModel.utilisateur">
+              <MappingFragment StoreEntitySet="utilisateur">
+                <ScalarProperty Name="nom_user" ColumnName="nom_user" />
+                <ScalarProperty Name="mot_de_pass" ColumnName="mot_de_pass" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ventes">
+            <EntityTypeMapping TypeName="GESTION_de_STOCKModel.vente">
+              <MappingFragment StoreEntitySet="vente">
+                <ScalarProperty Name="id_vente" ColumnName="id_vente" />
+                <ScalarProperty Name="date_vente" ColumnName="date_vente" />
+                <ScalarProperty Name="id_client" ColumnName="id_client" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="detail_vente">
+            <EntityTypeMapping TypeName="GESTION_de_STOCKModel.detail_vente">
+              <MappingFragment StoreEntitySet="detail_vente">
+                <ScalarProperty Name="id_vente" ColumnName="id_vente" />
+                <ScalarProperty Name="id_produit" ColumnName="id_produit" />
+                <ScalarProperty Name="quantite" ColumnName="quantite" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

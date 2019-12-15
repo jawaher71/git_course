@@ -1,0 +1,13 @@
+C:\Users\Adnane\Documents\gestion_vente\gestion_vente\bin\Debug\gestion_vente.exe.config
+C:\Users\Adnane\Documents\gestion_vente\gestion_vente\obj\Debug\gestion_vente.csprojResolveAssemblyReference.cache
+C:\Users\Adnane\Documents\gestion_vente\gestion_vente\obj\Debug\gestion_vente.PL.FRM_Menu.resources
+C:\Users\Adnane\Documents\gestion_vente\gestion_vente\obj\Debug\gestion_vente.Properties.Resources.resources
+C:\Users\Adnane\Documents\gestion_vente\gestion_vente\obj\Debug\gestion_vente.csproj.GenerateResource.Cache
+C:\Users\Adnane\Documents\gestion_vente\gestion_vente\bin\Debug\gestion_vente.exe
+C:\Users\Adnane\Documents\gestion_vente\gestion_vente\bin\Debug\gestion_vente.pdb
+C:\Users\Adnane\Documents\gestion_vente\gestion_vente\bin\Debug\EntityFramework.dll
+C:\Users\Adnane\Documents\gestion_vente\gestion_vente\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Adnane\Documents\gestion_vente\gestion_vente\bin\Debug\EntityFramework.xml
+C:\Users\Adnane\Documents\gestion_vente\gestion_vente\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Adnane\Documents\gestion_vente\gestion_vente\obj\Debug\gestion_vente.exe
+C:\Users\Adnane\Documents\gestion_vente\gestion_vente\obj\Debug\gestion_vente.pdb
